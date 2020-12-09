@@ -1,2 +1,2 @@
-# movie-gone-api
-Api of a typical movie store.
+# todo-touch-api
+Api of a typical todo list.
