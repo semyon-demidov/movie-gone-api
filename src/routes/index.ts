@@ -1,16 +1,11 @@
-import express, {
-  Response,
-} from 'express'
+import express from 'express'
+
+import boards from './boards'
+import tasks from './tasks'
 
 const router = express.Router()
 
-/* GET home page. */
-router.get('/', (_req, res: Response) => {
-  res.render('index', { title: 'Express' })
-  return res.status
-})
-
-// export default router
-// module.exports = router;
+router.use('/boards', boards)
+router.use('/tasks', tasks)
 
 export default router

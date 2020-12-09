@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
 import indexRouter from './routes'
-import usersRouter from './routes/users'
 
 interface Error {
   status?: number
@@ -26,7 +25,6 @@ app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'pug')
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use((_req: Request, _res: Response, next) => {
@@ -46,5 +44,5 @@ app.use((err: Error, req: Request, res: Response) => {
 
 app.listen(port, () => {
   // tslint:disable-next-line:no-console
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Server is starting at http://localhost:${port}`)
 })
