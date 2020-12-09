@@ -1,13 +1,16 @@
 import { Request, Response } from 'express'
-// funcs
 
-/* GET home page. */
 export const getTasksList = (_req: Request, res: Response) => {
   res.render('index', { title: 'getTasksList' })
   return res.status
 }
 
 export const getTask = (_req: Request, res: Response) => {
+  res.render('index', { title: 'getTask' })
+  return res.status
+}
+
+export const getBoardTasksList = (_req: Request, res: Response) => {
   res.render('index', { title: 'getTask' })
   return res.status
 }

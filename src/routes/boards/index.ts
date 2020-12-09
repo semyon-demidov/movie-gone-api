@@ -12,7 +12,7 @@ const router = Router()
 
 router.get('/', getBoardsList)
 
-router.post('/:id', getBoard)
+router.get('/:id', getBoard)
 
 router.post('/:id', createBoard)
 
