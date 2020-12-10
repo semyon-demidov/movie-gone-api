@@ -13,7 +13,7 @@ const pool = mysql.createPool({
   connectTimeout: 30000,
 })
 
-pool.getConnection((err, connection) => {
+pool.getConnection((err, connection): void => {
   if (err) {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       // tslint:disable-next-line:no-console

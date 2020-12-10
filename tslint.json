@@ -17,6 +17,11 @@
         "semicolon": [
             true,
             "never"
+        ],
+        "typedef": [
+            true,
+            "call-signature",
+            "arrow-call-signature"
         ]
     },
     "rulesDirectory": []

@@ -29,12 +29,12 @@ app.set('view engine', 'pug')
 app.use('/', indexRouter)
 
 // catch 404 and forward to error handler
-app.use((_req: Request, _res: Response, next) => {
+app.use((_req: Request, _res: Response, next): void => {
   next(createError(404))
 })
 
 // error handler
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response): void => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
@@ -44,7 +44,7 @@ app.use((err: Error, req: Request, res: Response) => {
   res.render('error')
 })
 
-app.listen(port, () => {
+app.listen(port, (): void => {
   // tslint:disable-next-line:no-console
   console.log(`Server is starting at http://localhost:${port}`)
 })
