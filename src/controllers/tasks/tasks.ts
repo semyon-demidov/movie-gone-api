@@ -1,31 +1,31 @@
 import { Request, Response } from 'express'
 
-export const getTasksList = (_req: Request, res: Response) => {
+export const getTasksListController = (_req: Request, res: Response) => {
   res.render('index', { title: 'getTasksList' })
   return res.status
 }
 
-export const getTask = (_req: Request, res: Response) => {
+export const getTaskController = (_req: Request, res: Response) => {
   res.render('index', { title: 'getTask' })
   return res.status
 }
 
-export const getBoardTasksList = (_req: Request, res: Response) => {
+export const getBoardTasksListController = (_req: Request, res: Response) => {
   res.render('index', { title: 'getTask' })
   return res.status
 }
 
-export const createTask = (_req: Request, res: Response) => {
+export const createTaskController = (_req: Request, res: Response) => {
   res.render('index', { title: 'createTask' })
   return res.status
 }
 
-export const updateTask = (_req: Request, res: Response) => {
+export const updateTaskController = (_req: Request, res: Response) => {
   res.render('index', { title: 'updateTask' })
   return res.status
 }
 
-export const deleteTask = (_req: Request, res: Response) => {
+export const deleteTaskController = (_req: Request, res: Response) => {
   res.render('index', { title: 'deleteTask' })
   return res.status
 }
