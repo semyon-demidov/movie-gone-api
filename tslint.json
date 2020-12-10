@@ -22,7 +22,13 @@
             true,
             "call-signature",
             "arrow-call-signature"
-        ]
+        ],
+        "no-console": {
+            "options": [
+                "log"
+            ],
+            "severity": "error"
+        }
     },
     "rulesDirectory": []
 }
