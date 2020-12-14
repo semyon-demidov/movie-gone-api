@@ -17,7 +17,7 @@ router.get('/:listId', getBoardTasksListController)
 
 router.get('/:id/:listId', getTaskController)
 
-router.post('/:id', createTaskController)
+router.post('/', createTaskController)
 
 router.put('/:id', updateTaskController)
 

@@ -14,7 +14,7 @@ router.get('/', getBoardsListController)
 
 router.get('/:id', getBoardController)
 
-router.post('/:id', createBoardController)
+router.post('/', createBoardController)
 
 router.put('/:id', updateBoardController)
 
