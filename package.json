@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && nodemon src/app.ts",
     "dev": "node dist/app.js",
     "build": "tsc -p",
-    "tslint": "tslint --project tsconfig.json"
+    "tslint": "tslint --project tsconfig.json",
+    "compile": "tsc && node ./dist/app.js",
+    "start": "./node_modules/nodemon/bin/nodemon.js -e ts --exec \"npm run compile\""
   },
   "_moduleAliases": {
     "@": "dist"
