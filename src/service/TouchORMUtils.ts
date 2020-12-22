@@ -6,22 +6,24 @@ interface PostFixesInterface {
 
 const postFixes: PostFixesInterface = {
   contains: (item): string => (
-    `LIKE %${item}%`
+    `LIKE '%${item}%'`
   ),
   in: (items): string => {
-    const values = items.join(', ')
-    return `IN (${values})`
+    const values = Array.isArray(items)
+      ? items.join("', '")
+      : items
+    return `IN ('${values}')`
   },
   default: (items): string[] => {
     const prepareField = (item: string | number): string => (
       `= '${item}'`
     )
 
-    if (Array.isArray(items)) {
-      return items.map(prepareField)
-    }
+    const list = Array.isArray(items)
+      ? items
+      : [items]
 
-    return [items].map(prepareField)
+    return list.map(prepareField)
   },
 }
 

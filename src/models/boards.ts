@@ -1,16 +1,16 @@
 import query from '@/service/TouchORM'
 
-type GetBoards = (
+type BoardParams = (
   params: {
-    filterBy?: { boardName?: string },
+    filterBy?: { id?: string | number, boardName?: string },
     sort?: { fields: string[], order: string },
     pager?: { limit: number, offset: number },
   },
 ) => Promise<any>
 
-export const createBoard = async (params: { boardName?: string }): Promise<any> => {
+export const createBoard = async (boardName?: string): Promise<any> => {
   const fields = {
-    name: (params || {}).boardName,
+    name: boardName,
     created_at: new Date().toISOString().
       replace(/T/, ' ').
       replace(/\..+/, ''),
@@ -23,7 +23,7 @@ export const createBoard = async (params: { boardName?: string }): Promise<any> 
   return list
 }
 
-export const getBoards: GetBoards = async ({
+export const getBoardsList: BoardParams = async ({
   filterBy = {},
   sort = { fields: ['id'], order: 'ASC' },
   pager = {
@@ -31,12 +31,30 @@ export const getBoards: GetBoards = async ({
     limit: 100,
   },
 }): Promise<any> => {
-  const list = await query('boards')
+  const board = await query('boards')
     .select('*')
     .where(filterBy)
     .orderBy(sort.fields, sort.order)
     .limit(pager.limit, pager.offset)
     .init()
 
-  return list
+  return board
+}
+
+export const getBoard = async (
+  params: { id?: string | number, boardName?: string },
+): Promise<any> => {
+  const [board] = await query('boards')
+    .select('*')
+    .where(params)
+    .init()
+
+  return board
+}
+
+export const deleteBoard = async (id?: string | number): Promise<void> => {
+  await query('boards')
+    .delete()
+    .where({ id })
+    .init()
 }

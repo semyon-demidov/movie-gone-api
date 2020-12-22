@@ -10,11 +10,11 @@ import {
 
 const router = Router()
 
+router.post('/', createBoardController)
+
 router.get('/', getBoardsListController)
 
 router.get('/:id', getBoardController)
-
-router.post('/', createBoardController)
 
 router.put('/:id', updateBoardController)
 

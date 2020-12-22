@@ -5,10 +5,10 @@ type QueryConcat = (finalQuery: string, fieldName: string, index: number) => str
 
 class TouchORM {
   query: string
-  entity: string
-  constructor(entity) {
+  tableName: string
+  constructor(tableName) {
     this.query = ''
-    this.entity = entity
+    this.tableName = tableName
   }
 
   select(fields: string[] | string): TouchORM {
@@ -18,19 +18,9 @@ class TouchORM {
         : fields
 
       this.query = `SELECT ${preparedFields}`
-      if (this.entity) {
-        this.query = `${this.query} FROM ${this.entity}`
+      if (this.tableName) {
+        this.query = `${this.query} FROM ${this.tableName}`
       }
-      return this
-    } catch (error) {
-      console.error('Error: ', error)
-      return this
-    }
-  }
-
-  from(entity: string): TouchORM {
-    try {
-      this.query = `${this.query} FROM ${entity}`
       return this
     } catch (error) {
       console.error('Error: ', error)
@@ -103,7 +93,18 @@ class TouchORM {
         return `${prevItem} '${item}'${fieldsValues[index + 1] ? ', ' : ''} `
       }, '')
 
-      this.query = `INSERT INTO ${this.entity} (${fieldsKeys}) VALUES (${values})`
+      this.query = `INSERT INTO ${this.tableName} (${fieldsKeys}) VALUES (${values})`
+
+      return this
+    } catch (error) {
+      console.error('Error: ', error)
+      return this
+    }
+  }
+
+  delete(): TouchORM {
+    try {
+      this.query = `DELETE FROM ${this.tableName}`
 
       return this
     } catch (error) {
@@ -124,8 +125,8 @@ class TouchORM {
   }
 }
 
-const HOC = (entity: string): TouchORM => {
-  return new TouchORM(entity)
+const HOC = (tableName: string): TouchORM => {
+  return new TouchORM(tableName)
 }
 
 export default HOC

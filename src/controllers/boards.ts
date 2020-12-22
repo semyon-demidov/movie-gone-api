@@ -1,27 +1,18 @@
 import { Request, Response } from 'express'
 
-import { createBoard, getBoards } from '@/models/boards'
+import {
+  createBoard,
+  getBoardsList,
+  getBoard,
+  deleteBoard,
+} from '@/models/boards'
 import {
   checkRequireFields,
-  //  convertQueryParams
+  // convertQueryParams,
 } from '@/helpers'
 
 interface BoardBody {
   boardName: string
-}
-
-export const getBoardsListController = async (req: Request, res: Response): Promise<void> => {
-  // const params = convertQueryParams(req.query)
-  const list = await getBoards({
-    filterBy: req.query,
-    pager: { limit: 10, offset: 0 },
-  })
-
-  res.send(list)
-}
-
-export const getBoardController = (_req: Request, res: Response): void => {
-  res.send('getBoardController')
 }
 
 export const createBoardController = async (req: Request, res: Response): Promise<void> => {
@@ -29,22 +20,60 @@ export const createBoardController = async (req: Request, res: Response): Promis
     const { body }: { body: BoardBody } = req
 
     const hasRequiredFields = checkRequireFields(['boardName'], body)
-
     if (!hasRequiredFields) {
-      res.status(400).json({
-        message: 'Specify required fields, please',
+      res.status(400).send({
+        message: 'Specify required fields',
       })
+      return
     }
 
-    await createBoard(body)
+    await createBoard(body.boardName)
 
-    res.json({
+    res.send({
       message: `Board '${body.boardName}' has been created successfully`,
     })
   } catch (err) {
     console.error('Error: ', err)
 
-    res.status(500).json({
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
+}
+
+export const getBoardsListController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const boardsList = await getBoardsList({
+      filterBy: req.query,
+      pager: { limit: 10, offset: 0 },
+    })
+
+    res.send(boardsList)
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
+}
+
+export const getBoardController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a board',
+      })
+      return
+    }
+
+    const board = await getBoard({ id: req.params.id })
+
+    res.send(board)
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
       message: 'Internal Server Error',
     })
   }
@@ -54,6 +83,32 @@ export const updateBoardController = (_req: Request, res: Response): void => {
   res.send('updateBoardController')
 }
 
-export const deleteBoardController = (_req: Request, res: Response): void => {
-  res.send('deleteBoardController')
+export const deleteBoardController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a board',
+      })
+    }
+
+    const board = await getBoard({ id: req.params.id })
+    if (!board) {
+      res.status(400).send({
+        message: 'Board isn\'t found',
+      })
+      return
+    }
+
+    await deleteBoard(board.id)
+
+    res.send({
+      message: 'Board has been deleted successfully',
+    })
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
 }

@@ -29,7 +29,11 @@
             ],
             "severity": "error"
         },
-        "align": [true, "parameters", "statements"]
+        "align": [
+            true,
+            "parameters",
+            "statements"
+        ]
     },
     "rulesDirectory": []
 }
