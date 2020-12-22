@@ -6,7 +6,7 @@ import {
   createBoardController,
   updateBoardController,
   deleteBoardController,
-} from './boards'
+} from '@/controllers/boards'
 
 const router = Router()
 

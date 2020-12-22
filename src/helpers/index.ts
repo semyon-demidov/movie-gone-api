@@ -6,7 +6,7 @@ export const convertQueryParams = (params: object): object => { // get normal da
       ...prevData,
       [fieldName]: params[key],
     }
-  },                                {})
+  }, {})
 }
 
 export const checkRequireFields = (schema: string[], fields: object): boolean => {

@@ -6,7 +6,7 @@ import logger from 'morgan'
 
 import 'module-alias/register'
 
-import indexRouter from './controllers'
+import indexRouter from './routes'
 
 interface Error {
   status?: number

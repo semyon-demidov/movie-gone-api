@@ -43,5 +43,5 @@ export const prepareWhereFields = (params: object, excludedFields?: string[]): o
           [fieldName]: prepareditem,
         }
     )
-  },                                {})
+  }, {})
 }

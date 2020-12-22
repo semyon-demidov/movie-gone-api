@@ -1,3 +1,4 @@
+
 import { Router } from 'express'
 
 import {
@@ -7,7 +8,7 @@ import {
   createListController,
   updateListController,
   deleteListController,
-} from './lists'
+} from '@/controllers/lists'
 
 const router = Router()
 

@@ -47,9 +47,14 @@ class TouchORM {
         return this
       }
 
-      const concatQuery: QueryConcat = (finalQuery, fieldName, index): string => ( // if an array in params check on eq syntaxys
-        `${finalQuery} ${fieldName} ${params[fieldName]}${paramsKeys[index + 1] ? ' and' : ''}`
-      )
+      const concatQuery: QueryConcat = (finalQuery, fieldName, index): string => {
+        const fieldValue = params[fieldName]
+        const valueQuery = Array.isArray(fieldValue)
+          ? fieldValue.join(` AND ${fieldName} `)
+          : fieldValue
+
+        return `${finalQuery} ${fieldName} ${valueQuery}${paramsKeys[index + 1] ? ' AND' : ''}`
+      }
 
       this.query = `${this.query} ${paramsKeys.reduce(concatQuery, 'WHERE')}`
       return this
@@ -66,7 +71,7 @@ class TouchORM {
       }
 
       const concatQuery: QueryConcat = (finalQuery, fieldName, index): string => (
-        `${finalQuery} ${fieldName}${fields[index + 1] ? ' and' : ''}${!fields[index + 1] ? ` ${order}` : ''}`
+        `${finalQuery} ${fieldName}${fields[index + 1] ? ' AND' : ''}${!fields[index + 1] ? ` ${order}` : ''}`
       )
 
       this.query = `${this.query} ${fields.reduce(concatQuery, 'ORDER BY')}`
@@ -96,7 +101,7 @@ class TouchORM {
         prevItem: string, item: string, index: number,
       ): string => {
         return `${prevItem} '${item}'${fieldsValues[index + 1] ? ', ' : ''} `
-      },                                 '')
+      }, '')
 
       this.query = `INSERT INTO ${this.entity} (${fieldsKeys}) VALUES (${values})`
 
