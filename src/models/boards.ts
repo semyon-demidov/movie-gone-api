@@ -58,3 +58,12 @@ export const deleteBoard = async (id?: string | number): Promise<void> => {
     .where({ id })
     .init()
 }
+
+export const updateBoard = async (
+  id: string | number, fields: { name?: string },
+): Promise<void> => {
+  await query('boards')
+    .update(fields)
+    .where({ id })
+    .init()
+}

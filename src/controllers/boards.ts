@@ -5,6 +5,7 @@ import {
   getBoardsList,
   getBoard,
   deleteBoard,
+  updateBoard,
 } from '@/models/boards'
 import {
   checkRequireFields,
@@ -79,8 +80,34 @@ export const getBoardController = async (req: Request, res: Response): Promise<v
   }
 }
 
-export const updateBoardController = (_req: Request, res: Response): void => {
-  res.send('updateBoardController')
+export const updateBoardController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a board',
+      })
+    }
+
+    const board = await getBoard({ id: req.params.id })
+    if (!board) {
+      res.status(400).send({
+        message: 'Board isn\'t found',
+      })
+      return
+    }
+
+    await updateBoard(board.id, { name: req.body.boardName })
+
+    res.send({
+      message: 'Board has been updated successfully',
+    })
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
 }
 
 export const deleteBoardController = async (req: Request, res: Response): Promise<void> => {

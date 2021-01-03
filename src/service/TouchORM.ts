@@ -1,5 +1,5 @@
 import db from './mysqlClient'
-import { prepareWhereFields } from './TouchORMUtils'
+import { prepareWhereFields } from './touchORM-utils'
 
 type QueryConcat = (finalQuery: string, fieldName: string, index: number) => string
 
@@ -94,6 +94,25 @@ class TouchORM {
       }, '')
 
       this.query = `INSERT INTO ${this.tableName} (${fieldsKeys}) VALUES (${values})`
+
+      return this
+    } catch (error) {
+      console.error('Error: ', error)
+      return this
+    }
+  }
+
+  update(fields: object): TouchORM {
+    try {
+      const fieldsKeys = Object.keys(fields)
+
+      const keyValueQuery = fieldsKeys.reduce((
+        prevItem: string, itemKey: string, index: number,
+      ): string => {
+        return `${prevItem} ${itemKey} = '${fields[itemKey]}'${fieldsKeys[index + 1] ? ', ' : ''} `
+      }, '')
+
+      this.query = `UPDATE ${this.tableName} SET ${keyValueQuery}`
 
       return this
     } catch (error) {
