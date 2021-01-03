@@ -58,13 +58,6 @@ export const getBoardsListController = async (req: Request, res: Response): Prom
 
 export const getBoardController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a board',
-      })
-      return
-    }
-
     const board = await getBoard({ id: req.params.id })
 
     res.send(board)
@@ -79,13 +72,8 @@ export const getBoardController = async (req: Request, res: Response): Promise<v
 
 export const updateBoardController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a board',
-      })
-    }
-
     const board = await getBoard({ id: req.params.id })
+
     if (!board) {
       res.status(400).send({
         message: 'Board isn\'t found',
@@ -109,13 +97,8 @@ export const updateBoardController = async (req: Request, res: Response): Promis
 
 export const deleteBoardController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a board',
-      })
-    }
-
     const board = await getBoard({ id: req.params.id })
+
     if (!board) {
       res.status(400).send({
         message: 'Board isn\'t found',

@@ -16,14 +16,14 @@ interface BoardBody {
 
 export const getListsController = async (req: Request, res: Response): Promise<void> => {
   try {
+    const board = await getBoard({ id: req.params.boardId })
+
     const lists = await getLists({
       filterBy: req.query,
       pager: { limit: 10, offset: 0 },
     })
 
-    const board = await getBoard({ id: req.params.boardId })
-
-    res.send({ lists, board })
+    res.send({ board, lists })
   } catch (err) {
     console.error('Error: ', err)
 
@@ -35,13 +35,6 @@ export const getListsController = async (req: Request, res: Response): Promise<v
 
 export const getListItemController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a list',
-      })
-      return
-    }
-
     const list = await getListItem({ id: req.params.id })
 
     res.send(list)
@@ -82,13 +75,8 @@ export const createListController = async (req: Request, res: Response): Promise
 
 export const updateListController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a list',
-      })
-    }
-
     const listItem = await getListItem({ id: req.params.id })
+
     if (!listItem) {
       res.status(400).send({
         message: 'List isn\'t found',
@@ -112,13 +100,8 @@ export const updateListController = async (req: Request, res: Response): Promise
 
 export const deleteListController = async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.params.id) {
-      res.status(400).send({
-        message: 'Specify id of a list',
-      })
-    }
-
     const listItem = await getListItem({ id: req.params.id })
+
     if (!listItem) {
       res.status(400).send({
         message: 'List isn\'t found',
