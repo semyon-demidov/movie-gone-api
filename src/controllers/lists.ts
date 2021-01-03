@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import {
   createList,
   getLists,
+  getListItem,
 } from '@/models/lists'
 import { getBoard } from '@/models/boards'
 import { checkRequireFields } from '@/helpers'
@@ -30,12 +31,25 @@ export const getListsController = async (req: Request, res: Response): Promise<v
   }
 }
 
-export const getListItemController = (_req: Request, res: Response): void => {
-  res.send('getListItemController')
-}
+export const getListItemController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a list',
+      })
+      return
+    }
 
-export const getBoardListsController = (_req: Request, res: Response): void => {
-  res.send('getBoardListsController')
+    const list = await getListItem({ id: req.params.id })
+
+    res.send(list)
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
 }
 
 export const createListController = async (req: Request, res: Response): Promise<void> => {

@@ -41,3 +41,14 @@ export const getLists: ListParams = async ({
 
   return board
 }
+
+export const getListItem = async (
+  params: { id?: string | number, boardName?: string },
+): Promise<any> => {
+  const board = await query('lists')
+    .select('*')
+    .where(params)
+    .init()
+
+  return board
+}

@@ -2,7 +2,6 @@
 import { Router } from 'express'
 
 import {
-  getListsController,
   getListItemController,
   createListController,
   updateListController,
@@ -11,9 +10,7 @@ import {
 
 const router = Router()
 
-router.get('/:boardId', getListsController)
-
-router.get('/:id/:boardId', getListItemController)
+router.get('/:id', getListItemController)
 
 router.post('/:boardId', createListController)
 
