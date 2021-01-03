@@ -7,10 +7,7 @@ import {
   deleteBoard,
   updateBoard,
 } from '@/models/boards'
-import {
-  checkRequireFields,
-  // convertQueryParams,
-} from '@/helpers'
+import { checkRequireFields } from '@/helpers'
 
 interface BoardBody {
   boardName: string
