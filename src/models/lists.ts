@@ -43,12 +43,28 @@ export const getLists: ListParams = async ({
 }
 
 export const getListItem = async (
-  params: { id?: string | number, boardName?: string },
+  params: { id?: string | number, name?: string },
 ): Promise<any> => {
-  const board = await query('lists')
+  const [board] = await query('lists')
     .select('*')
     .where(params)
     .init()
 
   return board
+}
+
+export const updateListItem = async (
+  id: string | number, fields: { name?: string },
+): Promise<void> => {
+  await query('lists')
+    .update(fields)
+    .where({ id })
+    .init()
+}
+
+export const deleteListItem = async (id?: string | number): Promise<void> => {
+  await query('lists')
+    .delete()
+    .where({ id })
+    .init()
 }

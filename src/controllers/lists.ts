@@ -4,6 +4,8 @@ import {
   createList,
   getLists,
   getListItem,
+  updateListItem,
+  deleteListItem,
 } from '@/models/lists'
 import { getBoard } from '@/models/boards'
 import { checkRequireFields } from '@/helpers'
@@ -78,10 +80,62 @@ export const createListController = async (req: Request, res: Response): Promise
   }
 }
 
-export const updateListController = (_req: Request, res: Response): void => {
-  res.send('updateListController')
+export const updateListController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a list',
+      })
+    }
+
+    const listItem = await getListItem({ id: req.params.id })
+    if (!listItem) {
+      res.status(400).send({
+        message: 'List isn\'t found',
+      })
+      return
+    }
+
+    await updateListItem(listItem.id, { name: req.body.listName })
+
+    res.send({
+      message: 'List has been updated successfully',
+    })
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
 }
 
-export const deleteListController = (_req: Request, res: Response): void => {
-  res.send('deleteListController')
+export const deleteListController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.params.id) {
+      res.status(400).send({
+        message: 'Specify id of a list',
+      })
+    }
+
+    const listItem = await getListItem({ id: req.params.id })
+    if (!listItem) {
+      res.status(400).send({
+        message: 'List isn\'t found',
+      })
+      return
+    }
+
+    await deleteListItem(listItem.id)
+
+    res.send({
+      message: 'List has been deleted successfully',
+    })
+  } catch (err) {
+    console.error('Error: ', err)
+
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
 }
