@@ -1,5 +1,6 @@
 import db from './mysqlClient'
-import { prepareWhereFields } from './touchORM-utils'
+import { prepareWhereFields, separateItem } from './touchORM-utils'
+import { checkIsExist } from '@/helpers'
 
 type QueryConcat = (finalQuery: string, fieldName: string, index: number) => string
 
@@ -43,7 +44,7 @@ class TouchORM {
           ? fieldValue.join(` AND ${fieldName} `)
           : fieldValue
 
-        return `${finalQuery} ${fieldName} ${valueQuery}${paramsKeys[index + 1] ? ' AND' : ''}`
+        return `${finalQuery} ${fieldName} ${valueQuery}${(paramsKeys.length > index + 1) ? ' AND' : ''}`
       }
 
       this.query = `${this.query} ${paramsKeys.reduce(concatQuery, 'WHERE')}`
@@ -61,7 +62,7 @@ class TouchORM {
       }
 
       const concatQuery: QueryConcat = (finalQuery, fieldName, index): string => (
-        `${finalQuery} ${fieldName}${fields[index + 1] ? ' AND' : ''}${!fields[index + 1] ? ` ${order}` : ''}`
+        `${finalQuery} ${fieldName}${(fields.length > index + 1) ? ' AND' : ''}${!fields[index + 1] ? ` ${order}` : ''}`
       )
 
       this.query = `${this.query} ${fields.reduce(concatQuery, 'ORDER BY')}`
@@ -84,16 +85,30 @@ class TouchORM {
 
   create(fields: object): TouchORM {
     try {
-      const fieldsKeys = Object.keys(fields).join(', ')
+      const fieldsKeys = Object.keys(fields)
       const fieldsValues = Object.values(fields)
 
       const values = fieldsValues.reduce((
         prevItem: string, item: string, index: number,
       ): string => {
-        return `${prevItem} '${item}'${fieldsValues[index + 1] ? ', ' : ''} `
+        if (checkIsExist(item)) {
+          return `${prevItem} '${item}'${separateItem(fieldsValues.length, index)} `
+        }
+
+        return prevItem
       }, '')
 
-      this.query = `INSERT INTO ${this.tableName} (${fieldsKeys}) VALUES (${values})`
+      const keys = fieldsKeys.reduce((
+        prevItem: string, itemKey: string, index: number,
+      ): string => {
+        if (checkIsExist(fields[itemKey])) {
+          return `${prevItem} ${itemKey}${separateItem(fieldsKeys.length, index)}`
+        }
+
+        return prevItem
+      }, '')
+
+      this.query = `INSERT INTO ${this.tableName} (${keys}) VALUES (${values})`
 
       return this
     } catch (error) {
@@ -109,10 +124,14 @@ class TouchORM {
       const keyValueQuery = fieldsKeys.reduce((
         prevItem: string, itemKey: string, index: number,
       ): string => {
-        return `${prevItem} ${itemKey} = '${fields[itemKey]}'${fieldsKeys[index + 1] ? ', ' : ''} `
+        if (checkIsExist(fields[itemKey])) {
+          return `${prevItem} ${itemKey} = '${fields[itemKey]}'${separateItem(fieldsKeys.length, index)}`
+        }
+
+        return prevItem
       }, '')
 
-      this.query = `UPDATE ${this.tableName} SET ${keyValueQuery}`
+      this.query = `UPDATE ${this.tableName} SET ${keyValueQuery.trim().replace(/,$/, '')}`
 
       return this
     } catch (error) {

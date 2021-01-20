@@ -47,3 +47,9 @@ export const prepareWhereFields = (params: object, excludedFields?: string[]): o
     )
   }, {})
 }
+
+export const separateItem = (size, index, separator = ','): string => {
+  return (
+    (size > index + 1) ? `${separator} ` : ''
+  )
+}
