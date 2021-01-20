@@ -16,3 +16,7 @@ export const checkRequireFields = (schema: string[], fields: object): boolean =>
     ))
   ))
 }
+
+export const checkIsExist = (item: any): boolean => (
+  ![undefined, null, ''].includes(item)
+)
