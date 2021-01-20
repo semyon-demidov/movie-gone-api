@@ -3,7 +3,6 @@ import { Router } from 'express'
 import {
   getTasksListController,
   getTaskController,
-  getBoardTasksListController,
   createTaskController,
   updateTaskController,
   deleteTaskController,
@@ -13,11 +12,9 @@ const router = Router()
 
 router.get('/', getTasksListController)
 
-router.get('/:listId', getBoardTasksListController)
+router.get('/:id', getTaskController)
 
-router.get('/:id/:listId', getTaskController)
-
-router.post('/', createTaskController)
+router.post('/:listId', createTaskController)
 
 router.put('/:id', updateTaskController)
 
