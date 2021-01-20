@@ -17,11 +17,9 @@ export const createList = async (listName: string, boardId: string): Promise<any
       replace(/\..+/, ''),
   }
 
-  const list = await query('lists')
+  await query('lists')
     .create(fields)
     .init()
-
-  return list
 }
 
 export const getLists: ListParams = async ({
@@ -45,12 +43,12 @@ export const getLists: ListParams = async ({
 export const getListItem = async (
   params: { id?: string | number, name?: string },
 ): Promise<any> => {
-  const [board] = await query('lists')
+  const [listItem] = await query('lists')
     .select('*')
     .where(params)
     .init()
 
-  return board
+  return listItem
 }
 
 export const updateListItem = async (

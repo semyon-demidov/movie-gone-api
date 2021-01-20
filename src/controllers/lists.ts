@@ -16,7 +16,7 @@ interface BoardBody {
 
 export const getListsController = async (req: Request, res: Response): Promise<void> => {
   try {
-    const board = await getBoard({ id: req.params.boardId })
+    const board = await getBoard({ id: req.params.boardId }) // replace to left join
 
     const lists = await getLists({
       filterBy: req.query,
@@ -35,9 +35,9 @@ export const getListsController = async (req: Request, res: Response): Promise<v
 
 export const getListItemController = async (req: Request, res: Response): Promise<void> => {
   try {
-    const list = await getListItem({ id: req.params.id })
+    const listItem = await getListItem({ id: req.params.id })
 
-    res.send(list)
+    res.send(listItem)
   } catch (err) {
     console.error('Error: ', err)
 

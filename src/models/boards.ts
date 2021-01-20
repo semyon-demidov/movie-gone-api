@@ -16,11 +16,9 @@ export const createBoard = async (boardName?: string): Promise<any> => {
       replace(/\..+/, ''),
   }
 
-  const list = await query('boards')
+  await query('boards')
     .create(fields)
     .init()
-
-  return list
 }
 
 export const getBoardsList: BoardParams = async ({
