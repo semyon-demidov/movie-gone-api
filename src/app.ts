@@ -14,7 +14,7 @@ interface Error {
 }
 
 const app: Application = express()
-const port = 3001
+const port = 1337
 
 app.use(logger('dev'))
 app.use(express.json())

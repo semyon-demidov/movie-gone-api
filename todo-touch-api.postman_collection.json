@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "93eab06b-442a-4790-ae7c-5883a6b646fc",
+		"name": "todo-touch-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "/tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/tasks",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/tasks/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:boardId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/tasks/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:boardId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Task67",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "somse decription",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/tasks/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "newTitle2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "newDesc3",
+									"type": "text"
+								},
+								{
+									"key": "isCompleted",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/tasks/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/tasks/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "boards",
+			"item": [
+				{
+					"name": "/boards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/boards?id_in=15&id_in=16&name=aa",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"boards"
+							],
+							"query": [
+								{
+									"key": "id_in",
+									"value": "15"
+								},
+								{
+									"key": "id_in",
+									"value": "16"
+								},
+								{
+									"key": "name",
+									"value": "aa"
+								},
+								{
+									"key": "name_in",
+									"value": "bb",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/boards/:id/lists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/boards/5/lists",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"boards",
+								"5",
+								"lists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/boards/:id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "boardName",
+									"value": "todo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/boards/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"boards",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/boards/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/boards/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"boards",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/boards/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/boards/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"boards",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lists",
+			"item": [
+				{
+					"name": "/lists/:boardId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/lists/3",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"lists",
+								"3"
+							],
+							"query": [
+								{
+									"key": "name_in",
+									"value": "bb",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lists/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/lists/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"lists",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lists/:boardId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "listName",
+									"value": "todo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/lists/5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"lists",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lists/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "listName",
+									"value": "lust2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/lists/2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"lists",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lists/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/lists/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"lists",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
